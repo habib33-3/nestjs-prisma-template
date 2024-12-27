@@ -1,0 +1,5 @@
+# Exit on errors
+set -e
+
+# Run lint-staged using Bun to handle linting and formatting on staged files
+bun x lint-staged
