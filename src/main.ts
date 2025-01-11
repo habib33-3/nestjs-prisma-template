@@ -5,6 +5,7 @@ import { AppModule } from "./app.module";
 import env from "./config/env.config";
 import { CustomLoggerService } from "./custom-logger/custom-logger.service";
 import { AllExceptionsFilter } from "./filters/all-exceptions.filter";
+import { ValidationPipe } from "@nestjs/common";
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -19,7 +20,23 @@ async function bootstrap() {
     app.enableShutdownHooks();
 
     // Setup CORS and global prefix before starting the server
-    app.enableCors();
+    app.useGlobalPipes(
+        new ValidationPipe({
+            whitelist: true, // Strip unknown properties
+            forbidNonWhitelisted: true, // Throw error on extra properties
+            transform: true, // Automatically transform payloads to DTOs
+            disableErrorMessages: process.env.NODE_ENV === "production", // Disable detailed error messages in production
+        }),
+    );
+
+    // Setup CORS with a restrictive policy
+    // app.enableCors({
+    //     origin: env.ALLOWED_ORIGINS?.split(",") || ["http://localhost:3000"],
+    //     methods: "GET,POST,PUT,DELETE,PATCH",
+    //     credentials: true,
+    // });
+
+
     app.setGlobalPrefix("api/v1");
 
     // Retrieve logger from the app context using NestJS's DI
