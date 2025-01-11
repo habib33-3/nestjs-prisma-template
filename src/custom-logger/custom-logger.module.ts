@@ -1,4 +1,10 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from "@nestjs/common";
 
-@Module({})
+import { CustomLoggerService } from "./custom-logger.service";
+
+@Global()
+@Module({
+    providers: [CustomLoggerService],
+    exports: [CustomLoggerService],
+})
 export class CustomLoggerModule {}
