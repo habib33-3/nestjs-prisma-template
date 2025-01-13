@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { ValidationPipe } from "@nestjs/common";
 import { HttpAdapterHost, NestFactory } from "@nestjs/core";
 
 import { AppModule } from "./app.module";
 import env from "./config/env.config";
 import { CustomLoggerService } from "./custom-logger/custom-logger.service";
 import { AllExceptionsFilter } from "./filters/all-exceptions.filter";
-import { ValidationPipe } from "@nestjs/common";
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -36,7 +36,6 @@ async function bootstrap() {
     //     credentials: true,
     // });
 
-
     app.setGlobalPrefix("api/v1");
 
     // Retrieve logger from the app context using NestJS's DI
@@ -56,4 +55,4 @@ async function bootstrap() {
     // Start the application
     await app.listen(env.PORT ?? 5000);
 }
-bootstrap();
+bootstrap().catch((err) => console.error(err));

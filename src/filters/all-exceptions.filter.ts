@@ -121,10 +121,15 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
         return exception.toString();
     }
 
-    // Format Prisma error metadata
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    private formatPrismaMeta(meta: any): string {
-        if (!meta) return "Unknown fields";
-        return Object.values(meta).join(", ");
+    // Format Prisma error metadata safely
+    private formatPrismaMeta(meta: unknown): string {
+        if (typeof meta !== "object" || meta === null) {
+            return "Unknown fields";
+        }
+
+        // Ensure meta is an object and stringify its values safely
+        return Object.entries(meta)
+            .map(([key, value]) => `${key}: ${String(value)}`)
+            .join(", ");
     }
 }
