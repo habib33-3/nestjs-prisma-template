@@ -3,6 +3,7 @@ import { ValidationPipe } from "@nestjs/common";
 import { HttpAdapterHost, NestFactory } from "@nestjs/core";
 
 import { AppModule } from "./app.module";
+import { ResponseInterceptor } from "./common/interceptors/response.interceptors";
 import env from "./config/env.config";
 import { CustomLoggerService } from "./custom-logger/custom-logger.service";
 import { AllExceptionsFilter } from "./filters/all-exceptions.filter";
@@ -10,16 +11,21 @@ import { AllExceptionsFilter } from "./filters/all-exceptions.filter";
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
 
-    // Get the HttpAdapterHost for global exception filter handling
-    const { httpAdapter } = app.get(HttpAdapterHost);
+    // Setup CORS with a restrictive policy
+    // Uncomment and modify if needed
+    // app.enableCors({
+    //     origin: env.ALLOWED_ORIGINS?.split(",") || ["http://localhost:3000"],
+    //     methods: "GET,POST,PUT,DELETE,PATCH",
+    //     credentials: true,
+    // });
 
-    // Use global exception filter for handling all unhandled exceptions
-    app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
+    // Set global prefix for the API
+    app.setGlobalPrefix("api/v1");
 
     // Enable shutdown hooks for graceful shutdown
     app.enableShutdownHooks();
 
-    // Setup CORS and global prefix before starting the server
+    // Configure global pipes for validation
     app.useGlobalPipes(
         new ValidationPipe({
             whitelist: true, // Strip unknown properties
@@ -29,19 +35,17 @@ async function bootstrap() {
         }),
     );
 
-    // Setup CORS with a restrictive policy
-    // app.enableCors({
-    //     origin: env.ALLOWED_ORIGINS?.split(",") || ["http://localhost:3000"],
-    //     methods: "GET,POST,PUT,DELETE,PATCH",
-    //     credentials: true,
-    // });
+    // Set global exception filter
+    const { httpAdapter } = app.get(HttpAdapterHost);
+    app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
 
-    app.setGlobalPrefix("api/v1");
+    // Set global interceptors
+    app.useGlobalInterceptors(new ResponseInterceptor());
 
     // Retrieve logger from the app context using NestJS's DI
     const logger = app.get(CustomLoggerService);
 
-    // Listen for uncaught exceptions and unhandled rejections
+    // Handle uncaught exceptions and unhandled rejections
     process.on("uncaughtException", (err: any) => {
         logger.error(`Uncaught Exception: ${err.message}`);
         process.exit(1); // Exit process after logging error
