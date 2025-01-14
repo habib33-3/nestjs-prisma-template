@@ -1,5 +1,5 @@
 {
-  "name": "travel-wonder-server",
+  "name": "nestjs-prisma-template",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -30,6 +30,7 @@
     "@prisma/client": "^6.1.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
+    "cookie-parser": "^1.4.7",
     "dotenv": "^16.4.7",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
@@ -40,6 +41,7 @@
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",
     "@trivago/prettier-plugin-sort-imports": "^5.2.0",
+    "@types/cookie-parser": "^1.4.8",
     "@types/express": "^5.0.0",
     "@types/jest": "^29.5.2",
     "@types/node": "^20.3.1",
