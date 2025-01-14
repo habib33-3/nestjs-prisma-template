@@ -3,10 +3,10 @@ import { ValidationPipe } from "@nestjs/common";
 import { HttpAdapterHost, NestFactory } from "@nestjs/core";
 
 import { AppModule } from "./app.module";
+import env from "./common/config/env.config";
+import { AllExceptionsFilter } from "./common/filters/all-exceptions.filter";
 import { ResponseInterceptor } from "./common/interceptors/response.interceptors";
-import env from "./config/env.config";
 import { CustomLoggerService } from "./custom-logger/custom-logger.service";
-import { AllExceptionsFilter } from "./filters/all-exceptions.filter";
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
