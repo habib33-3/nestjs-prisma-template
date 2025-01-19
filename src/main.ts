@@ -1,15 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ValidationPipe } from "@nestjs/common";
-import { HttpAdapterHost, NestFactory } from "@nestjs/core";
-
 import * as cookieParser from "cookie-parser";
 import { ZodError } from "zod";
 
+import { ValidationPipe } from "@nestjs/common";
+import { HttpAdapterHost, NestFactory } from "@nestjs/core";
+
+import { AllExceptionsFilter } from "@/filters/all-exceptions.filter";
+
+import { ResponseInterceptor } from "@/interceptors/response.interceptors";
+
+import { CustomLoggerService } from "@/shared/custom-logger/custom-logger.service";
+
 import { AppModule } from "./app.module";
 import env from "./common/config/env.config";
-import { AllExceptionsFilter } from "./common/filters/all-exceptions.filter";
-import { ResponseInterceptor } from "./common/interceptors/response.interceptors";
-import { CustomLoggerService } from "./custom-logger/custom-logger.service";
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);

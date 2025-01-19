@@ -3,13 +3,16 @@ import { ConfigModule } from "@nestjs/config";
 import { APP_FILTER, APP_GUARD } from "@nestjs/core";
 import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
 
+import { AllExceptionsFilter } from "@/filters/all-exceptions.filter";
+
+import { RequestLoggingMiddleware } from "@/middlewares/request-logger.middleware";
+
+import { CustomLoggerModule } from "@/shared/custom-logger/custom-logger.module";
+import { CustomLoggerService } from "@/shared/custom-logger/custom-logger.service";
+import { PrismaModule } from "@/shared/prisma/prisma.module";
+
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
-import { AllExceptionsFilter } from "./common/filters/all-exceptions.filter";
-import { RequestLoggingMiddleware } from "./common/middlewares/request-logger.middleware";
-import { CustomLoggerModule } from "./custom-logger/custom-logger.module";
-import { CustomLoggerService } from "./custom-logger/custom-logger.service";
-import { PrismaModule } from "./prisma/prisma.module";
 
 @Module({
     imports: [

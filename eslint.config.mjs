@@ -28,7 +28,12 @@ export default [
             node: true,
             jest: true,
         },
-        ignorePatterns: [".eslintrc.js", "dist/**", "node_modules/**"],
+        ignorePatterns: [
+            ".eslintrc.js",
+            "dist/**",
+            "node_modules/**",
+            "**/*.spec.ts",
+        ],
         rules: {
             // NestJS-specific improvements
             "@typescript-eslint/interface-name-prefix": "off", // Deprecated, unnecessary
@@ -50,6 +55,7 @@ export default [
                     argsIgnorePattern: "^_",
                     varsIgnorePattern: "^_",
                     ignoreRestSiblings: true,
+                    caughtErrorsIgnorePattern: "^_",
                 },
             ],
             "prettier/prettier": "off",
@@ -66,6 +72,7 @@ export default [
             "@typescript-eslint/no-unsafe-call": "off",
             "@typescript-eslint/no-unsafe-spread": "off", // Disable the unsafe spread warning
             "@typescript-eslint/no-unsafe-member-access": "off", // Disable the unsafe member access warning
+            "@typescript-eslint/no-unsafe-return": "off",
         },
     }),
 ];

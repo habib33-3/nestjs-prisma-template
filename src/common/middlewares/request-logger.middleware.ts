@@ -1,9 +1,10 @@
-import { Injectable, NestMiddleware } from "@nestjs/common";
-
-import { NextFunction, Request, Response } from "express";
 import { performance } from "perf_hooks";
 
-import { CustomLoggerService } from "../../custom-logger/custom-logger.service";
+import { NextFunction, Request, Response } from "express";
+
+import { Injectable, NestMiddleware } from "@nestjs/common";
+
+import { CustomLoggerService } from "@/shared/custom-logger/custom-logger.service";
 
 @Injectable()
 export class RequestLoggingMiddleware implements NestMiddleware {
