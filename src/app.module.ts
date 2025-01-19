@@ -10,6 +10,7 @@ import { RequestLoggingMiddleware } from "@/middlewares/request-logger.middlewar
 import { CustomLoggerModule } from "@/shared/custom-logger/custom-logger.module";
 import { CustomLoggerService } from "@/shared/custom-logger/custom-logger.service";
 import { PrismaModule } from "@/shared/prisma/prisma.module";
+import { QueryBuilderModule } from "@/shared/query-builder/query-builder.module";
 
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
@@ -27,6 +28,7 @@ import { AppService } from "./app.service";
             isGlobal: true,
         }),
         CustomLoggerModule,
+        QueryBuilderModule,
     ],
     controllers: [AppController],
     providers: [
