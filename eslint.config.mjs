@@ -33,6 +33,7 @@ export default [
             "dist/**",
             "node_modules/**",
             "**/*.spec.ts",
+            "eslint.config.mjs",
         ],
         rules: {
             // NestJS-specific improvements
